@@ -1,23 +1,38 @@
 import Wallet from "./Wallet";
 import Transfer from "./Transfer";
 import "./App.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import server from "./server";
+
 
 function App() {
-  const [balance, setBalance] = useState(0);
-  const [address, setAddress] = useState("");
+    const [wallet, setWallet] = useState();
+    const [connected, setConnected] = useState(false);
 
-  return (
-    <div className="app">
-      <Wallet
-        balance={balance}
-        setBalance={setBalance}
-        address={address}
-        setAddress={setAddress}
-      />
-      <Transfer setBalance={setBalance} address={address} />
-    </div>
-  );
+    useEffect(() => {
+        async function connect() {
+            server.get("/").then(r => {
+                setConnected(r.statusText === "OK");
+            })
+        }
+        connect();
+    }, []);
+
+    return (
+        <div className="app">
+            {connected ?
+                <>
+                    <Wallet
+                        wallet={wallet}
+                        setWallet={setWallet}
+                    />
+                    <Transfer wallet={wallet} />
+                </>
+                :
+                <h1 style={{ color: "#ffffff" }}>Start your server</h1>
+            }
+        </div>
+    );
 }
 
 export default App;
