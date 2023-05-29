@@ -19,9 +19,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/balance/:address", (req, res) => {
-  const { address } = req.params;
-  const balance = balances[address] || 0;
-  res.send({ balance });
+    const { address } = req.params;
+    const balance = balances[address] || 0;
+    res.send({ balance });
 });
 
 app.post("/send", (req, res) => {
@@ -31,29 +31,29 @@ app.post("/send", (req, res) => {
         return res.status(404).send({ message: "not auth" })
     }
 
-  setInitialBalance(sender);
-  setInitialBalance(recipient);
+    setInitialBalance(sender);
+    setInitialBalance(recipient);
 
-  if (balances[sender] < amount) {
-    res.status(400).send({ message: "Not enough funds!" });
-  } else {
-    balances[sender] -= amount;
-    balances[recipient] += amount;
-    res.send({ balance: balances[sender] });
-  }
+    if (balances[sender] < amount) {
+        res.status(400).send({ message: "Not enough funds!" });
+    } else {
+        balances[sender] -= amount;
+        balances[recipient] += amount;
+        res.send({ balance: balances[sender] });
+    }
 
-  console.log("####################### +1 tx")
-  console.table(balances)
+    console.log("####################### +1 tx")
+    console.table(balances)
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}!`);
+    console.log(`Listening on port ${port}!`);
 });
 
 function setInitialBalance(address) {
-  if (!balances[address]) {
-    balances[address] = 0;
-  }
+    if (!balances[address]) {
+        balances[address] = 0;
+    }
 }
 
 function validateSiganture(sender, amount, signature) {
