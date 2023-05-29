@@ -2,14 +2,15 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = 3042;
+const ethers = require("ethers")
 
 app.use(cors());
 app.use(express.json());
 
 const balances = {
-  "0x1": 100,
-  "0x2": 50,
-  "0x3": 75,
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": 10000,
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8": 7500,
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC": 3000,
 };
 
 app.get("/balance/:address", (req, res) => {
@@ -19,7 +20,11 @@ app.get("/balance/:address", (req, res) => {
 });
 
 app.post("/send", (req, res) => {
-  const { sender, recipient, amount } = req.body;
+    const { sender, recipient, amount, signature } = req.body;
+
+    if (!validateSiganture(sender, amount, signature)) {
+        return res.status(404).send({ message: "not auth" })
+    }
 
   setInitialBalance(sender);
   setInitialBalance(recipient);
@@ -31,6 +36,9 @@ app.post("/send", (req, res) => {
     balances[recipient] += amount;
     res.send({ balance: balances[sender] });
   }
+
+  console.log("####################### +1 tx")
+  console.table(balances)
 });
 
 app.listen(port, () => {
@@ -41,4 +49,12 @@ function setInitialBalance(address) {
   if (!balances[address]) {
     balances[address] = 0;
   }
+}
+
+function validateSiganture(sender, amount, signature) {
+    if (ethers.utils.verifyMessage(amount.toString(), signature) != sender) {
+        return false
+    } else {
+        return true
+    }
 }
