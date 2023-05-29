@@ -4,11 +4,9 @@ This project is an example of using a client and server to facilitate transfers 
 
 However, something that we would like to incoporate is Public Key Cryptography. By using Elliptic Curve Digital Signatures we can make it so the server only allows transfers that have been signed for by the person who owns the associated address.
 
-### Video instructions
-For an overview of this project as well as getting started instructions, check out the following video:
+### DEMO
 
-https://www.loom.com/share/0d3c74890b8e44a5918c4cacb3f646c4
- 
+https://www.loom.com/share/ 
 ### Client
 
 The client folder contains a [react app](https://reactjs.org/) using [vite](https://vitejs.dev/). To get started, follow these steps:
@@ -27,5 +25,3 @@ The server folder contains a node.js server using [express](https://expressjs.co
 3. Run `node index` to start the server 
 
 The application should connect to the default server port (3042) automatically! 
-
-_Hint_ - Use [nodemon](https://www.npmjs.com/package/nodemon) instead of `node` to automatically restart the server on any changes.
