@@ -1,12 +1,13 @@
-## ECDSA Node
+## 🏁 Your Goal: ECDSA
 
-This project is an example of using a client and server to facilitate transfers between different addresses. Since there is just a single server on the back-end handling transfers, this is clearly very centralized. We won't worry about distributed consensus for this project.
+This project begins with a client that is allowed to transfer any funds from any account to another account. That's not very secure. By applying digital signatures we can require that only the user with the appropriate private key can create a signature that will allow them to move funds from one account to the other. Then, the server can verify the signature to move funds from one account to another.
 
-However, something that we would like to incoporate is Public Key Cryptography. By using Elliptic Curve Digital Signatures we can make it so the server only allows transfers that have been signed for by the person who owns the associated address.
+- Incorporate Public Key Cryptography so transfers can only be completed with a valid signature
+- The person sending the transaction should have to verify that they own the private key corresponding to the address that is sending funds
 
 ### DEMO
 
-https://www.loom.com/share/ 
+https://www.loom.com/share/d91a50611d8149ffb967da462e9f8d99
 ### Client
 
 The client folder contains a [react app](https://reactjs.org/) using [vite](https://vitejs.dev/). To get started, follow these steps:
