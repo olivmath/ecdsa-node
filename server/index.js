@@ -13,6 +13,11 @@ const balances = {
     "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC": 3000,
 };
 
+// for check in front end
+app.get("/", (req, res) => {
+    res.send({});
+});
+
 app.get("/balance/:address", (req, res) => {
   const { address } = req.params;
   const balance = balances[address] || 0;
